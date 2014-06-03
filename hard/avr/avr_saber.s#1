@@ -13735,12 +13735,6 @@ at 30/07/2012 11:22:31</description>
 <wire x1="241.3" y1="83.82" x2="233.68" y2="83.82" width="0.1524" layer="91"/>
 <pinref part="+3V5" gate="G$1" pin="+3V3"/>
 </segment>
-<segment>
-<label x="81.28" y="0" size="1.778" layer="95"/>
-<pinref part="BLUETOOTH" gate="G$1" pin="4"/>
-<junction x="91.44" y="0"/>
-<wire x1="91.44" y1="0" x2="81.28" y2="0" width="0.1524" layer="91"/>
-</segment>
 </net>
 <net name="MOSI" class="0">
 <segment>
@@ -14222,6 +14216,14 @@ at 30/07/2012 11:22:31</description>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="DAC" gate="A" pin="VOUT"/>
 <wire x1="165.1" y1="149.86" x2="152.4" y2="149.86" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="VCC" class="0">
+<segment>
+<label x="81.28" y="0" size="1.778" layer="95"/>
+<pinref part="BLUETOOTH" gate="G$1" pin="4"/>
+<junction x="91.44" y="0"/>
+<wire x1="91.44" y1="0" x2="81.28" y2="0" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
