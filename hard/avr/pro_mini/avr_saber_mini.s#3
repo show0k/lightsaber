@@ -13453,6 +13453,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="GND22" library="supply1" deviceset="GND" device=""/>
 <part name="GND23" library="supply1" deviceset="GND" device=""/>
 <part name="LED1" library="SparkFun-Electromechanical" deviceset="SMALL_SERVO" device=""/>
+<part name="P+14" library="supply1" deviceset="+5V" device=""/>
+<part name="GND24" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13524,7 +13526,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="GND7" gate="GND" x="-20.32" y="142.24"/>
 <instance part="GND8" gate="GND" x="-7.62" y="147.32" rot="R270"/>
 <instance part="LED" gate="G$1" x="78.74" y="45.72" rot="R180"/>
-<instance part="GND14" gate="1" x="76.2" y="53.34" rot="R180"/>
+<instance part="GND14" gate="1" x="73.66" y="53.34" rot="R180"/>
 <instance part="P+8" gate="1" x="68.58" y="48.26" rot="MR270"/>
 <instance part="FTDI" gate="G$1" x="50.8" y="5.08" rot="R180"/>
 <instance part="GND15" gate="1" x="40.64" y="-5.08"/>
@@ -13564,6 +13566,8 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="GND22" gate="1" x="111.76" y="96.52" rot="R90"/>
 <instance part="GND23" gate="1" x="73.66" y="91.44" rot="R270"/>
 <instance part="LED1" gate="G$1" x="68.58" y="73.66"/>
+<instance part="P+14" gate="1" x="76.2" y="71.12" rot="MR90"/>
+<instance part="GND24" gate="1" x="73.66" y="68.58" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -13667,6 +13671,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$2" gate="G$1" pin="VCC"/>
 <wire x1="104.14" y1="91.44" x2="109.22" y2="91.44" width="0.1524" layer="91"/>
 <label x="106.68" y="91.44" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="LED1" gate="G$1" pin="V+"/>
+<pinref part="P+14" gate="1" pin="+5V"/>
+<wire x1="73.66" y1="71.12" x2="71.12" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -13772,6 +13781,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <segment>
 <pinref part="LED" gate="G$1" pin="GND"/>
 <pinref part="GND14" gate="1" pin="GND"/>
+<wire x1="73.66" y1="50.8" x2="76.2" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="FTDI" gate="G$1" pin="GND"/>
@@ -13860,6 +13870,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$2" gate="G$1" pin="GND"/>
 <wire x1="81.28" y1="91.44" x2="76.2" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="GND23" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="LED1" gate="G$1" pin="GND"/>
+<pinref part="GND24" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
