@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -12774,14 +12774,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R4" gate="G$1" pin="1"/>
 <wire x1="-35.56" y1="111.76" x2="-48.26" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="2"/>
-<wire x1="-63.5" y1="111.76" x2="-55.88" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="2"/>
-<wire x1="-55.88" y1="111.76" x2="-48.26" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="-63.5" y1="111.76" x2="-48.26" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="121.92" x2="-27.94" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="111.76" x2="-35.56" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="U$4" gate="G$1" pin="INH"/>
-<wire x1="-55.88" y1="121.92" x2="-55.88" y2="111.76" width="0.1524" layer="91"/>
-<junction x="-55.88" y="111.76"/>
 <junction x="-48.26" y="111.76"/>
 <junction x="-35.56" y="111.76"/>
 </segment>
