@@ -1,21 +1,4 @@
-9 Degrees of Freedom - MPU-9150 Breakout
-========================================
+This is example Arduino code that allows you to print raw accelerometer, gyro, and magnetometer data. The original library came from i2cdevlib.com and was based on the very similar MPU-6050, which only used an accelerometer and gyro. The MPU-6050 device library was modified to include raw magnetometer data for the MPU-9150.
 
-[![9 Degrees of Freedom - MPU-9150 Breakout](https://dlnmh9ip6v2uc.cloudfront.net/images/products/1/1/4/8/6/11486-01_medium.jpg)  
-*9 Degrees of Freedom - MPU-9150 Breakout (SEN-11486)*](https://www.sparkfun.com/products/11486)
+To use the library, copy both I2Cdev and MPU6050 into your *libraries* folder in your main Arduino directory. If you don't have a folder called libraries, create one and drop both files in there. Now you can goto the example sketch named *MPU9150_raw* (in MPU6050 -> Examples), open and run the main .ino file.  
 
-The MPU-9150 is an accelerometer, gyro, and magnetometer all in a single package with an I2C interface. [The datasheet can be found here.](http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Sensors/IMU/PS-MPU-9150A.pdf)
-
-Repository Contents
--------------------
-
-* **/firmware** - An Arduino library with an example that sends raw sensor data out of the serial port
-* **/hardware** - All Eagle design files
-
-License Information
--------------------
-The hardware is released under [Creative Commons Share-alike 3.0](http://creativecommons.org/licenses/by-sa/3.0/).  
-The firmware is released under the [MIT License](http://opensource.org/licenses/MIT).
-
-Hardware author: Aaron Weiss @ SparkFun Electonics  
-Firmware original author: [Jeff Rowberg](https://github.com/jrowberg/i2cdevlib) (jeff@rowberg.net); modified by Aaron Weiss (aaron@sparkfun.com)
