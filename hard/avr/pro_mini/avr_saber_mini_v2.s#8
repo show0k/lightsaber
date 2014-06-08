@@ -12388,8 +12388,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="GND10" library="supply2" deviceset="GND" device=""/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="GND25" library="supply2" deviceset="GND" device=""/>
-<part name="R11" library="rcl" deviceset="R-EU_" device="R0805"/>
-<part name="GND26" library="supply2" deviceset="GND" device=""/>
 <part name="HP" library="pinhead" deviceset="PINHD-1X2" device=""/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0805"/>
 <part name="C7" library="rcl" deviceset="C-EU" device="025-025X050"/>
@@ -12476,8 +12474,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="GND10" gate="GND" x="241.3" y="142.24"/>
 <instance part="P+5" gate="1" x="193.04" y="142.24"/>
 <instance part="GND25" gate="GND" x="193.04" y="124.46"/>
-<instance part="R11" gate="G$1" x="175.26" y="139.7" rot="R90"/>
-<instance part="GND26" gate="GND" x="175.26" y="132.08"/>
 <instance part="HP" gate="G$1" x="284.48" y="142.24"/>
 <instance part="R12" gate="G$1" x="251.46" y="144.78"/>
 <instance part="C7" gate="G$1" x="193.04" y="132.08"/>
@@ -12550,8 +12546,10 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="VDD"/>
-<wire x1="198.12" y1="139.7" x2="193.04" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="198.12" y1="139.7" x2="195.58" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="P+5" gate="1" pin="+5V"/>
+<wire x1="195.58" y1="139.7" x2="193.04" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="195.58" y1="139.7" x2="195.58" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$4" gate="G$1" pin="VOUT"/>
@@ -12609,10 +12607,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="241.3" y1="144.78" x2="246.38" y2="144.78" width="0.1524" layer="91"/>
 <junction x="241.3" y="144.78"/>
-</segment>
-<segment>
-<pinref part="R11" gate="G$1" pin="1"/>
-<pinref part="GND26" gate="GND" pin="GND"/>
 </segment>
 <segment>
 <pinref part="GND25" gate="GND" pin="GND"/>
@@ -12954,13 +12948,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="U$1" gate="G$1" pin="BYPASS"/>
 <wire x1="198.12" y1="134.62" x2="193.04" y2="134.62" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="1"/>
-</segment>
-</net>
-<net name="N$32" class="0">
-<segment>
-<pinref part="U$1" gate="G$1" pin="|SHUTDOWN"/>
-<pinref part="R11" gate="G$1" pin="2"/>
-<wire x1="175.26" y1="144.78" x2="198.12" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$33" class="0">

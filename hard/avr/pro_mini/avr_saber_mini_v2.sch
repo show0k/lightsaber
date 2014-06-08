@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -12437,6 +12437,7 @@ http://www.st.com&lt;p&gt;
 <part name="P+1" library="supply1" deviceset="+5V" device=""/>
 <part name="P+2" library="supply1" deviceset="+12V" device=""/>
 <part name="GND2" library="supply2" deviceset="GND" device=""/>
+<part name="HP_SECOURS" library="pinhead" deviceset="PINHD-1X2" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12523,6 +12524,7 @@ http://www.st.com&lt;p&gt;
 <instance part="P+1" gate="1" x="30.48" y="180.34" rot="R270"/>
 <instance part="P+2" gate="1" x="-43.18" y="182.88"/>
 <instance part="GND2" gate="GND" x="0" y="162.56"/>
+<instance part="HP_SECOURS" gate="G$1" x="208.28" y="170.18"/>
 </instances>
 <busses>
 </busses>
@@ -12546,6 +12548,8 @@ http://www.st.com&lt;p&gt;
 <pinref part="P+5" gate="1" pin="+5V"/>
 <wire x1="195.58" y1="139.7" x2="193.04" y2="139.7" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="139.7" x2="195.58" y2="144.78" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="|SHUTDOWN"/>
+<wire x1="198.12" y1="144.78" x2="195.58" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="MMA8451" gate="G$1" pin="VCC_IN"/>
@@ -12607,6 +12611,10 @@ http://www.st.com&lt;p&gt;
 <segment>
 <pinref part="GND25" gate="GND" pin="GND"/>
 <pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="HP_SECOURS" gate="G$1" pin="2"/>
+<wire x1="205.74" y1="170.18" x2="185.42" y2="170.18" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="170.18" x2="185.42" y2="127" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="127" x2="193.04" y2="127" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="BAT_IN" gate="G$1" pin="2"/>
@@ -13091,7 +13099,11 @@ http://www.st.com&lt;p&gt;
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="DAC" gate="A" pin="VOUT"/>
-<wire x1="165.1" y1="149.86" x2="152.4" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
+<pinref part="HP_SECOURS" gate="G$1" pin="1"/>
+<wire x1="160.02" y1="149.86" x2="152.4" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="205.74" y1="172.72" x2="160.02" y2="172.72" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="172.72" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$4" class="0">
