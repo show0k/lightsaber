@@ -246,6 +246,14 @@
 <text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
 <pin name="+3V3" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
 </symbol>
+<symbol name="+12V">
+<wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-0.635" x2="0" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="1.27" x2="-1.27" y2="-0.635" width="0.254" layer="94"/>
+<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<pin name="+12V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="+5V" prefix="P+">
@@ -278,6 +286,19 @@
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="G$1" symbol="+3V3" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="+12V" prefix="P+">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="+12V" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -12367,6 +12388,52 @@ We've spent an enormous amount of time creating and checking these footprints an
 </deviceset>
 </devicesets>
 </library>
+<library name="st-microelectronics">
+<description>&lt;b&gt;ST Microelectronics Devices&lt;/b&gt;&lt;p&gt;
+Microcontrollers,  I2C components, linear devices&lt;p&gt;
+http://www.st.com&lt;p&gt;
+&lt;i&gt;Include st-microelectronics-2.lbr, st-microelectronics-3.lbr.&lt;p&gt;&lt;/i&gt;
+
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="DPAK">
+<smd name="1" x="0" y="0" dx="9.75" dy="12.5" layer="1" rot="R90"/>
+<smd name="2" x="-2.54" y="-10.275" dx="1.6" dy="3.5" layer="1" rot="R180"/>
+<smd name="3" x="2.54" y="-10.275" dx="1.6" dy="3.5" layer="1" rot="R180"/>
+</package>
+</packages>
+<symbols>
+<symbol name="L7805">
+<pin name="OUT" x="15.24" y="2.54" length="middle" rot="R180"/>
+<pin name="IN" x="-15.24" y="2.54" length="middle"/>
+<pin name="GND" x="0" y="-10.16" length="middle" rot="R90"/>
+<wire x1="-10.16" y1="5.08" x2="10.16" y2="5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="5.08" x2="10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-5.08" x2="-10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-5.08" x2="-10.16" y2="5.08" width="0.254" layer="94"/>
+<text x="-10.16" y="7.62" size="2.54" layer="94">L7805</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="L7805">
+<gates>
+<gate name="G$1" symbol="L7805" x="0" y="0"/>
+</gates>
+<devices>
+<device name="TO263" package="DPAK">
+<connects>
+<connect gate="G$1" pin="GND" pad="1"/>
+<connect gate="G$1" pin="IN" pad="2"/>
+<connect gate="G$1" pin="OUT" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -12441,6 +12508,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="R8" library="rcl" deviceset="R-EU_" device="R0805" value="10k"/>
 <part name="R10" library="rcl" deviceset="R-EU_" device="R0805" value="10k"/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="R0805" value="10k"/>
+<part name="U$5" library="st-microelectronics" deviceset="L7805" device="TO263"/>
+<part name="C9" library="rcl" deviceset="C-EU" device="C0805" value="100nF"/>
+<part name="C10" library="rcl" deviceset="C-EU" device="C0805" value="330nF"/>
+<part name="P+1" library="supply1" deviceset="+5V" device=""/>
+<part name="P+2" library="supply1" deviceset="+12V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12527,6 +12599,11 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="R8" gate="G$1" x="147.32" y="81.28" rot="R180"/>
 <instance part="R10" gate="G$1" x="154.94" y="78.74" rot="R180"/>
 <instance part="R13" gate="G$1" x="139.7" y="76.2" rot="R180"/>
+<instance part="U$5" gate="G$1" x="0" y="177.8"/>
+<instance part="C9" gate="G$1" x="20.32" y="170.18" rot="R180"/>
+<instance part="C10" gate="G$1" x="-17.78" y="170.18" rot="R180"/>
+<instance part="P+1" gate="1" x="30.48" y="180.34" rot="R270"/>
+<instance part="P+2" gate="1" x="-43.18" y="182.88"/>
 </instances>
 <busses>
 </busses>
@@ -12592,6 +12669,15 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="LED1" gate="G$1" pin="V+"/>
 <pinref part="P+14" gate="1" pin="+5V"/>
 <wire x1="73.66" y1="71.12" x2="71.12" y2="71.12" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="OUT"/>
+<wire x1="15.24" y1="180.34" x2="20.32" y2="180.34" width="0.1524" layer="91"/>
+<pinref part="C9" gate="G$1" pin="2"/>
+<wire x1="20.32" y1="180.34" x2="27.94" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="175.26" x2="20.32" y2="180.34" width="0.1524" layer="91"/>
+<junction x="20.32" y="180.34"/>
+<pinref part="P+1" gate="1" pin="+5V"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -12909,6 +12995,15 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="104.14" y1="99.06" x2="109.22" y2="99.06" width="0.1524" layer="91"/>
 <label x="106.68" y="99.06" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="IN"/>
+<wire x1="-15.24" y1="180.34" x2="-17.78" y2="180.34" width="0.1524" layer="91"/>
+<pinref part="C10" gate="G$1" pin="2"/>
+<wire x1="-17.78" y1="180.34" x2="-43.18" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="175.26" x2="-17.78" y2="180.34" width="0.1524" layer="91"/>
+<junction x="-17.78" y="180.34"/>
+<pinref part="P+2" gate="1" pin="+12V"/>
+</segment>
 </net>
 <net name="BATTLEVEL" class="0">
 <segment>
@@ -13142,6 +13237,19 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="LED1" gate="G$1" pin="SIG"/>
 <pinref part="U$2" gate="G$1" pin="8"/>
 <wire x1="71.12" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="C9" gate="G$1" pin="1"/>
+<wire x1="20.32" y1="167.64" x2="20.32" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="165.1" x2="0" y2="165.1" width="0.1524" layer="91"/>
+<pinref part="U$5" gate="G$1" pin="GND"/>
+<wire x1="0" y1="167.64" x2="0" y2="165.1" width="0.1524" layer="91"/>
+<pinref part="C10" gate="G$1" pin="1"/>
+<wire x1="0" y1="165.1" x2="-17.78" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="165.1" x2="-17.78" y2="167.64" width="0.1524" layer="91"/>
+<junction x="0" y="165.1"/>
 </segment>
 </net>
 </nets>

@@ -12403,9 +12403,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="C8" library="rcl" deviceset="C-EU" device="C1206K"/>
 <part name="R2" library="rcl" deviceset="R-EU_" device="R0805" value="100k"/>
 <part name="R3" library="rcl" deviceset="R-EU_" device="R0805" value="100k"/>
-<part name="GND6" library="supply1" deviceset="GND" device=""/>
-<part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
-<part name="P+4" library="supply1" deviceset="+5V" device=""/>
 <part name="MMA8451" library="MMA8451_miniboard" deviceset="DEV" device=""/>
 <part name="U2" library="SparkFun-PowerIC" deviceset="MIC5205" device="3.3V"/>
 <part name="+3V2" library="supply1" deviceset="+3V3" device=""/>
@@ -12494,9 +12491,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="C8" gate="G$1" x="-63.5" y="116.84"/>
 <instance part="R2" gate="G$1" x="-114.3" y="124.46" rot="R90"/>
 <instance part="R3" gate="G$1" x="-114.3" y="111.76" rot="R90"/>
-<instance part="GND6" gate="1" x="152.4" y="50.8" rot="MR0"/>
-<instance part="+3V1" gate="G$1" x="157.48" y="106.68"/>
-<instance part="P+4" gate="1" x="147.32" y="106.68"/>
 <instance part="MMA8451" gate="G$1" x="-93.98" y="38.1"/>
 <instance part="U2" gate="G$1" x="10.16" y="147.32"/>
 <instance part="+3V2" gate="G$1" x="30.48" y="157.48"/>
@@ -12567,10 +12561,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="C5" gate="G$1" pin="1"/>
 <wire x1="-33.02" y1="129.54" x2="-27.94" y2="129.54" width="0.1524" layer="91"/>
 <junction x="-33.02" y="129.54"/>
-</segment>
-<segment>
-<pinref part="P+4" gate="1" pin="+5V"/>
-<wire x1="147.32" y1="104.14" x2="149.86" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="MMA8451" gate="G$1" pin="VCC_IN"/>
@@ -12652,10 +12642,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="-27.94" y1="111.76" x2="-35.56" y2="111.76" width="0.1524" layer="91"/>
 <junction x="-48.26" y="111.76"/>
 <junction x="-35.56" y="111.76"/>
-</segment>
-<segment>
-<pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="152.4" y1="53.34" x2="152.4" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="MMA8451" gate="G$1" pin="GND"/>
@@ -12746,10 +12732,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 </segment>
 </net>
 <net name="+3V3" class="0">
-<segment>
-<pinref part="+3V1" gate="G$1" pin="+3V3"/>
-<wire x1="157.48" y1="104.14" x2="154.94" y2="99.06" width="0.1524" layer="91"/>
-</segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="OUT"/>
 <wire x1="17.78" y1="152.4" x2="30.48" y2="152.4" width="0.1524" layer="91"/>
