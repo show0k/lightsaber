@@ -12724,7 +12724,11 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="P+1" gate="1" x="30.48" y="180.34" rot="R270"/>
 <instance part="P+2" gate="1" x="-43.18" y="182.88"/>
 <instance part="GND2" gate="GND" x="0" y="162.56"/>
+<<<<<<< HEAD
 <instance part="IC1" gate="A1" x="0" y="180.34"/>
+=======
+<instance part="IC1" gate="A1" x="-10.16" y="182.88"/>
+>>>>>>> ac2dc4ddce12747f35bc7fdd42fffc20173a8427
 </instances>
 <busses>
 </busses>
@@ -12784,9 +12788,15 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 </segment>
 <segment>
 <pinref part="C9" gate="G$1" pin="2"/>
+<<<<<<< HEAD
 <wire x1="10.16" y1="180.34" x2="27.94" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="175.26" x2="10.16" y2="180.34" width="0.1524" layer="91"/>
 <junction x="10.16" y="180.34"/>
+=======
+<wire x1="0" y1="182.88" x2="27.94" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="175.26" x2="0" y2="182.88" width="0.1524" layer="91"/>
+<junction x="0" y="182.88"/>
+>>>>>>> ac2dc4ddce12747f35bc7fdd42fffc20173a8427
 <pinref part="P+1" gate="1" pin="+5V"/>
 <pinref part="IC1" gate="A1" pin="VO"/>
 </segment>
@@ -12910,6 +12920,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <segment>
 <pinref part="C9" gate="G$1" pin="1"/>
 <wire x1="20.32" y1="167.64" x2="20.32" y2="165.1" width="0.1524" layer="91"/>
+<<<<<<< HEAD
 <wire x1="20.32" y1="165.1" x2="0" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="C10" gate="G$1" pin="1"/>
 <wire x1="0" y1="172.72" x2="-17.78" y2="165.1" width="0.1524" layer="91"/>
@@ -12918,6 +12929,16 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <pinref part="GND2" gate="GND" pin="GND"/>
 <pinref part="IC1" gate="A1" pin="GND"/>
 <wire x1="0" y1="172.72" x2="0" y2="165.1" width="0.1524" layer="91"/>
+=======
+<wire x1="20.32" y1="165.1" x2="-10.16" y2="175.26" width="0.1524" layer="91"/>
+<pinref part="C10" gate="G$1" pin="1"/>
+<wire x1="-10.16" y1="175.26" x2="-17.78" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="165.1" x2="-17.78" y2="167.64" width="0.1524" layer="91"/>
+<junction x="-10.16" y="175.26"/>
+<pinref part="GND2" gate="GND" pin="GND"/>
+<pinref part="IC1" gate="A1" pin="GND"/>
+<wire x1="-10.16" y1="175.26" x2="0" y2="165.1" width="0.1524" layer="91"/>
+>>>>>>> ac2dc4ddce12747f35bc7fdd42fffc20173a8427
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -13095,9 +13116,15 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 </segment>
 <segment>
 <pinref part="C10" gate="G$1" pin="2"/>
+<<<<<<< HEAD
 <wire x1="-10.16" y1="180.34" x2="-43.18" y2="180.34" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="175.26" x2="-10.16" y2="180.34" width="0.1524" layer="91"/>
 <junction x="-10.16" y="180.34"/>
+=======
+<wire x1="-20.32" y1="182.88" x2="-43.18" y2="180.34" width="0.1524" layer="91"/>
+<wire x1="-17.78" y1="175.26" x2="-20.32" y2="182.88" width="0.1524" layer="91"/>
+<junction x="-20.32" y="182.88"/>
+>>>>>>> ac2dc4ddce12747f35bc7fdd42fffc20173a8427
 <pinref part="P+2" gate="1" pin="+12V"/>
 <pinref part="IC1" gate="A1" pin="VI"/>
 </segment>
