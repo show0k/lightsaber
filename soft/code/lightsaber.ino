@@ -1,25 +1,58 @@
+//SD
+
+//ADXL345
+#include <Wire.h>                                                                //include the Wire library (necessary for I2C and SPI protocols)
+#include <I2Cdev.h> 
+#include <ADXL345.h> 
 
 #include <WaveHC.h>
 #include <WaveUtil.h>
+
+#define DEBUG true
+#define SWING_THREESHOLD 1.15
+#define HIT_THREESHOLD 1.75
+
+//ADXL
+#define THRESH_TAP 70 
+#define THRESH_ACT 22 
+#define DUR 20    
+
 
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
 FatReader file;   // This object represent the WAV file for a pi digit or period
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
+      
+//TODO
+
+
+static char* start = "start0.wav" ;
+static char* hit= "hit1.wav" ;
+static char* idle= "idle0.wav"  ;
+static char* swing= "swing2.wav"  ;
+
+volatile char g_state = 1;
+volatile char g_old_state = 0;
+int tap_int, activity_int = 0 ;                                                       //declare and initialize boolean variables to track tap type
+ADXL345 myACC = ADXL345();   
 /*
  * Define macro to put error messages in flash memory
  */
 #define error(msg) error_P(PSTR(msg))
 
-//////////////////////////////////// SETUP
+
+//TODO
+//Mettre la led en sortie
 
 void setup() {
-  // set up Serial library at 9600 bps
-  Serial.begin(9600);           
-  
+
+  Serial.begin(9600);  
+
+  pinMode(8, OUTPUT) ;
+  digitalWrite(8,HIGH); 
+                                                       //set LED pins to output         
   PgmPrintln("Lightsaber");
-  
   if (!card.init()) {
     error("Card init. failed!");
   }
@@ -29,49 +62,108 @@ void setup() {
   if (!root.openRoot(vol)) {
     error("Couldn't open dir");
   }
-
   PgmPrintln("Files found:");
   root.ls();
+
+  //pinMode(10, OUTPUT);     // 
+
+
+  myACC.initialize();
+  Serial.println("Testing device connections...");
+  Serial.println(myACC.testConnection() ? "ADXL345 connection successful" : "ADXL345 connection failed");
+  
+  //TAP detection
+  attachInterrupt(0, interrupt0, RISING);
+  attachInterrupt(1, interrupt1, RISING);      
+  myACC.setTapThreshold(THRESH_TAP);                                               //set registers on the ADXL345 to the above defined values (see datasheet for tuning and explanations)
+  myACC.setTapDuration(DUR);
+  myACC.setIntSingleTapEnabled(true);
+  myACC.setIntSingleTapPin(0);
+  myACC.setTapAxisXEnabled(true);
+  myACC.setTapAxisYEnabled(true);
+  myACC.setTapAxisZEnabled(true);
+  
+  //Activity detection
+  myACC.setActivityThreshold(THRESH_ACT);
+  myACC.setIntActivityEnabled(true);
+  myACC.setIntActivityPin(1);
+  myACC.setActivityXEnabled(true);
+  myACC.setActivityYEnabled(true);
+  myACC.setActivityZEnabled(true);
+  myACC.setActivityAC(true);
+
+
+  myACC.setSleepEnabled(false);
+  //myACC.setIntSingleTapPin(TAP_INT_PIN);
+ myACC.setOffset(70,70,70);
+
+
+
+  playcomplete(start) ;
+  Serial.println("Lets Begin !");
+
 }
 
 
 
 void loop() { 
-  // get next character from flash memory
-  char c = pgm_read_byte(&pi[digit++]);
-   
-  if (c == 0) {
-    digit = 0;
-    Serial.println();
-    return;
+  myACC.getIntSingleTapSource();
+  myACC.getIntActivitySource();
+
+  switch(g_state) {
+            case 1 :
+              if (!wave.isplaying)
+                  playfile(idle) ;
+                  if(DEBUG)
+                 //   Serial.print("idle");
+              break;
+            case 2 :
+                delay(10);
+                if(g_state == 3)
+                {
+                    if(DEBUG)
+                  Serial.print("HIT  ");
+                  playcomplete(hit) ;
+                }
+                else if(g_old_state == 1)
+                {
+                  playfile(swing) ;
+                  //delay(800);
+                  if(DEBUG)
+                    Serial.print("swing");
+                }
+                
+                myACC.getIntActivitySource();
+                change_state(1);
+                break ;
+            case 3 :
+              if(DEBUG)
+                Serial.print("HIT  ");
+              playfile(hit) ; 
+              //delay(200);
+              
+              change_state(1);
+              myACC.getIntSingleTapSource();
+                //if (g_state == 2)
+                //   g_state = 0 ;*/
+                break ;
+            default :
+                //g_state = 0;
+                break ;
+
   }
-  Serial.write(c);
-    
-  speaknum(c);
-   
-  delay(10);
 }
 
 /////////////////////////////////// HELPERS
 
-char filename[13];
-void speaknum(char c) {
-  uint8_t i=0;
-  
-  // copy flash string for 'period' to filename
-  strcpy_P(filename, PSTR("P.WAV"));
-  
-  if ('0' <= c && c <= '9') {
-    // digit - change 'P' to digit
-    filename[0] = c;
-    i = 1;
-  } 
-  else if (c != '.') {
-    // error if not period
-    return;
-  }
-  playcomplete(filename);
+
+void change_state(char new_state)
+{
+  g_old_state = g_state;
+  g_state = new_state ;
+
 }
+
 /*
  * print error message and halt
  */
@@ -79,7 +171,7 @@ void error_P(const char *str) {
   PgmPrint("Error: ");
   SerialPrint_P(str);
   sdErrorCheck();
-  while(1);
+ // while(1);
 }
 /*
  * print error message and halt if SD I/O error
@@ -90,7 +182,7 @@ void sdErrorCheck(void) {
   Serial.print(card.errorCode(), HEX);
   PgmPrint(", ");
   Serial.println(card.errorData(), HEX);
-  while(1);
+  //while(1);
 }
 
 /*
@@ -122,4 +214,14 @@ void playfile(char *name) {
   }
   // ok time to play!
   wave.play();
+}
+
+void interrupt0()                                                              //a RISING on interrupt pin 2 (interrupt 0) would mean a single tap (from how we have wired and configured the ADXL345), therefore, set singleTap to true
+{
+  change_state(3);
+}
+
+void interrupt1()                                                              //a RISING on interrupt pin 2 (interrupt 0) would mean a single tap (from how we have wired and configured the ADXL345), therefore, set singleTap to true
+{
+    change_state(2);
 }
