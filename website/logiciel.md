@@ -13,7 +13,7 @@ Par soucis de simplicité de routage et d'emcombrement (nous pouvons difficileme
 # Gestion de la carte SD
 
 ## Protocole SPI
-Le microcontrolleur communique avec la carte SD avec le protocole SPI (Serial Peripheral Interface). C'est un bus de donnée série synchrone (l'horloge est sur le fil sck) permettant de communiquer en full duplex (le maitre et l'esclave peuvent *parler* en même temps).
+Le microcontrolleur communique avec la carte SD avec le protocole SPI (Serial Peripheral Interface). C'est un bus de donnée série synchrone (l'horloge est sur le fil sck) permettant de communiquer en full duplex (le maitre et l'esclave peuvent *parler* en même temps). C'est un protocole optimisé pour la rapidité ; on contrôle avec quel périphérique on *discute* en appliquant un état bas sur le chip select du périphérique correspondant.
 
 Il faut noter que la carte SD fonctionne en logique 3.3V, si notre microcontrolleur utilise une logique 5V il faut faire une adaptation de tension pour ne pas endommager la carte SD. Cela peut se faire avec un composant dédié ou de façon plus simple mais moins performante avec un pont diviseur de tension.
 
@@ -26,6 +26,7 @@ La librairie [SdFat](http://arconlab.com/lab/Arduino/Library/SD%20Reader%20-%20F
 
 ## Format de fichier WAVE-PCM
 Une très bon cours sur le format WAVE est accessible sur le [site de l'université de Stanford](https://ccrma.stanford.edu/courses/422/projects/WaveFormat).
+![Wave-PCM file](http://lightsaber.ensea.fr/data/images/wav-sound-format.gif)
 
 Les entêtes du ficher contiennent les informations sur la fréquence d'échantillonnage du fichier son, le nombre de canaux, le nombre de bits par échantillons et ainsi que les données. A la lecture du fichier wave, une fois les informations contenues dans l'entête récupérées, on va lire les données du format PCM et les transmettre au DAC externe. Ceci s'effectue sur interruption dont la période est calculée en fonction de la fréquence d'échantillonage du fichier, ce qui laisse le microcontrolleur libre de traiter plusieurs choses de même temps. 
 
@@ -39,6 +40,7 @@ TODO : mettre un bout de code
 
 # Gestion de l'acceleromètre
 ## Communication en I2C
+Le microcontrolleur communique avec l'acceléromètre en I2C. C'est un protocole 
 
 ## Fonctionnalités de l'acceleromètres
 ## Algotithme utilisé
