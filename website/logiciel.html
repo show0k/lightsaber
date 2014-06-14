@@ -124,14 +124,14 @@ body{font-size:16px;}
 <p>Pour stocker les fichiers audio, nous avons fait le choix d'utiliser une carte microSD ; elle est formatée avec une partition FAT32, qui a l'avantage d'être simple et lisible sur tous les systèmes d'exploitation. Les fichiers audio sont enregistrés dans le format brut PCM dans un conteneur WAVE appelé communément "format wave". Un format compressé comme le MP3 nécessiterai une puce dédié qui permet de décompresser le fichier ce qui apporte une complexité inutile pour les besoins de notre projet.</p>
 <h1 id="microcontrolleur">Microcontrolleur</h1>
 <p>Nous avons utilisé un microcontroleur <a href="http://www.atmel.com/devices/atmega328p.aspx">ATMEGA328p</a>, utilisable avec les librairies "Arduino".
-Ce choix est d'abord technologique, un microcontrolleur 8 bits est amplement suffisant pour l'ampleur du projet ; il n'est pas utile d'utiliser un processeur ARM 80 broches fonctionnant à 80MHz comme ce que nous avions immaginé au départ.
-Ensuite c'est un choix de simplicité, nous pouvons utiliser un grand nombre de librairies existantes, bien faites et documentées ce qui nous permet de ne pas <em>réinventer la roue</em>.</p>
+Ce choix est d'abord technologique, un microcontrolleur 8 bits est amplement suffisant pour l'ampleur du projet ; il n'est pas utile d'utiliser un processeur ARM11 80 broches fonctionnant à 60MHz comme ce que nous avions immaginé au départ.
+Ensuite c'est un choix de simplicité, nous pouvons utiliser un grand nombre de librairies existantes, relativement bien codées et documentées ce qui nous permet de ne pas <em>réinventer la roue</em>.</p>
 <p>Par soucis de simplicité de routage et d'emcombrement (nous pouvons difficilement souder des CMS de tailles inférieure à 0805 à la main), nous avons choisis d'utiliser une carte "ARDUINO PRO MINI". Ces cartes se trouvent pour moins de 2€ sur des <a href="http://www.ebay.fr/sch/i.html?_sacat=0&amp;_sop=15&amp;_nkw=arduino+pro+mini&amp;LH_PrefLoc=2&amp;rt=nc&amp;LH_BIN=1">vendeurs chinois</a> ce qui d'ailleurs est moins cher que le microcontrolleur seul sur des <a href="http://fr.farnell.com/atmel/atmega328p-au/micro-8-bits-avr-32k-flash-32tqfp/dp/1715486">vendeurs occidentaux</a>.</p>
 <h1 id="gestion-de-la-carte-sd">Gestion de la carte SD</h1>
 <h2 id="protocole-spi">Protocole SPI</h2>
 <p>Le microcontrolleur communique avec la carte SD avec le protocole SPI (Serial Peripheral Interface). C'est un protocole série synchrone (l'horloge étant nommée sck) permettant de communiquer en full duplex (le maitre et l'esclave peuvent <em>parler</em> en même temps). Le maitre communique sur le fil MOSI (Master Output Salve Input) et le périphérique esclave sur MISO. C'est un protocole optimisé pour la rapidité ; on contrôle avec quel périphérique on <em>discute</em> en appliquant un état bas sur le chip select (CS) du périphérique correspondant.
 Pour communiquer avec plusieurs périphériques en SPI il faut donc autant de CS que de périphériques, ce qui est assez limitant.</p>
-<p>Il faut noter que la carte SD fonctionne en logique 3.3V, si notre microcontrolleur utilise une logique 5V il faut faire une adaptation de tension sur tous les signaux pour ne pas endommager la carte SD. Cela peut se faire avec un composant dédié ou de façon plus simple mais moins performante avec un pont diviseur de tension.</p>
+<p>Il faut noter que la carte SD fonctionne en logique 3.3V, si notre microcontrolleur utilise une logique 5V (ce qui est le cas pour nous) il faut faire une adaptation de tension 5/3V3 sur tous les signaux pour ne pas endommager la carte SD. Cela peut se faire avec un composant dédié comme un buffer ou de façon plus simple mais moins performante avec un pont diviseur de tension.</p>
 <p>TODO : insérer image</p>
 <h2 id="format-de-partition-fat32">Format de partition FAT32</h2>
 <p>La librairie <a href="http://arconlab.com/lab/Arduino/Library/SD%20Reader%20-%20Fat32/html/class_sd_file.html">SdFat</a> permet de prendre facilement en main un support de stockage formaté en FAT16 ou FAT32 sur des microcontrolleurs atmega.</p>
@@ -141,7 +141,6 @@ Pour communiquer avec plusieurs périphériques en SPI il faut donc autant de CS
 <p>Les entêtes du ficher contiennent les informations sur la fréquence d'échantillonnage du fichier son, le nombre de canaux, le nombre de bits par échantillons et ainsi que les données. A la lecture du fichier wave, une fois les informations contenues dans l'entête récupérées, on va lire les données du format PCM et les transmettre au DAC externe. Ceci s'effectue sur interruption dont la période est calculée en fonction de la fréquence d'échantillonage du fichier, ce qui laisse le microcontrolleur libre de traiter plusieurs choses de même temps. </p>
 <p>Les fichiers audio utilisés sont échantillonés entre 16 et 22kHz de telle sorte à diminuer le temps processeur aloué à la lecture du fichier, tout en gardant une qualité correcte. </p>
 <p>Pour lire les fichiers Wave et les transmettre au <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/21897a.pdf">DAC externe</a> nous utilisons la librairie <a href="https://code.google.com/p/wavehc/">WaveHC</a> réalisé initialement par Lady Ada pour la carte d'extension d'extension <a href="http://www.adafruit.com/products/175">Wave Shield</a>.</p>
-<p>TODO : mettre un bout de code</p>
 <h1 id="gestion-de-l-acceleromètre">Gestion de l'acceleromètre</h1>
 <h2 id="quel-acceleromètre-choisir-et-comment-interprêter-les-données">Quel acceleromètre choisir et comment interprêter les données</h2>
 <p>L'acceleromètre est le composant crucial du projet pour permettre d'interprêter le mouvement. Après beaucoup de temps passé à élaborrer des algorithmes plus ou moins performant pour détecter le mouvement en focntion des seules composants de l'acceleration, nous nous sommes tournés vers une composant qui fait tout le traitement pour nous : l'<a href="http://lightsaber.ensea.fr/data/documents/adxl345.pdf">ADXL345</a>.
@@ -159,7 +158,8 @@ Il possède comme fonctionnalités inbteressantes :</p>
 <p>Le microcontrolleur communique avec l'acceléromètre en I2C. C'est un protocole synchrone, half duplex et bidirectionnel. Il y a seulement deux fils : SDA (Serial DAta line) qui sert à la communication et SCL (Serial Clock Line) qui transmet l'horloge imposé par le maitre. C'est un protocole maitre esclave, chaque communication ne peux être imposé que par le maitre, mais l'esclave peut devenir maitre (rébélion !). C'est un protocole initialement fait pour la domotique ; chaque périphérique étant identifié par un identifiant (dont il doit être unique sur ce bus, bien évidement), l'idée et qu'un microcontrolleur puisse interroger plusieurs centaines de capteurs différents, tous connectés sur un même bus de deux fils (limitant ainsi le nombre de fils et d'I/O).</p>
 <h2 id="algorithme-utilisé">Algorithme utilisé</h2>
 <p>L'algorithme utilisé est en somme très simple. On effectue une machine à état qui va passer d'un son à l'autre selon les données reçu par l'accéléromètre.
-Voici le code de la boucle principale simplifié : </p>
+L'acceleromètre va changer la variable globale d'état <strong><em>state</em></strong> à 2 lorsqu'on détecte une activité, ou à 3 lorsqu'on détecte un choc.</p>
+<p>Voici le code de la boucle principale simplifié : </p>
 <pre><code class="python">
 switch(state) {
             case 1 : //ILDE
@@ -187,4 +187,41 @@ switch(state) {
  }
 </code></pre>
 
-<h2 id="configuration-de-l-accéléromètre">Configuration de l'accéléromètre</h2></body></html>
+<h2 id="configuration-de-l-accéléromètre">Configuration de l'accéléromètre</h2>
+<p>Pour faciliter la configuration et l'utilisation de l'accéléromètre, nous utilisons une librairie du projet libre <a href="http://www.i2cdevlib.com/"><em>I2Cdev library collection</em></a>.</p>
+<p>Pour utiliser l'accéléromètre selon nos besoins, il nous faut activer l'interruption sur la détection de choc, prociser les filtres de la détection de choc, préciser les axes de détection ; et faire de même pour la détection d'activité.
+Avec cette librairie cela donne :</p>
+<pre><code class="python">#define THRESH_TAP 70 
+#define THRESH_ACT 22 
+#define DUR 20    
+
+ADXL345 myACC = ADXL345(); 
+
+void setup()
+{
+myACC.initialize();
+
+//TAP detection   
+myACC.setTapThreshold(THRESH_TAP) ;
+myACC.setTapDuration(DUR);
+myACC.setIntSingleTapEnabled(true);
+myACC.setIntSingleTapPin(0);
+myACC.setTapAxisXEnabled(true);
+myACC.setTapAxisYEnabled(true);
+myACC.setTapAxisZEnabled(true);
+
+//Activity detection
+myACC.setActivityThreshold(THRESH_ACT);
+myACC.setIntActivityEnabled(true);
+myACC.setIntActivityPin(1);
+myACC.setActivityXEnabled(true);
+myACC.setActivityYEnabled(true);
+myACC.setActivityZEnabled(true);
+myACC.setActivityAC(true);
+
+//Stop auto sleep
+myACC.setSleepEnabled(false);
+  }
+</code></pre>
+
+<p>Un front haut est sur la sortie d'interruption 0 de l'accéléromètre est activé en cas de choc, et de même sur la pin 1 en cas de mouvement. Ces deux pins sont reliées aux entrées d'interruption externe de notre microcontrolleur, ce qui nous permet de changer l'état de la machine à état qui gère la lecture des fichiers au sein des fonctions d'interruption.</p></body></html>

@@ -92,7 +92,7 @@ switch(state) {
 ```
 
 ## Configuration de l'accéléromètre
-Pour faciliter la configuration et l'utilisation de l'accéléromètre, nous utilisons une librairie du projet libre *I2Cdev library collection*.
+Pour faciliter la configuration et l'utilisation de l'accéléromètre, nous utilisons une librairie du projet libre [*I2Cdev library collection*](http://www.i2cdevlib.com/).
 
 Pour utiliser l'accéléromètre selon nos besoins, il nous faut activer l'interruption sur la détection de choc, prociser les filtres de la détection de choc, préciser les axes de détection ; et faire de même pour la détection d'activité.
 Avec cette librairie cela donne :
@@ -101,6 +101,8 @@ Avec cette librairie cela donne :
 #define THRESH_TAP 70 
 #define THRESH_ACT 22 
 #define DUR 20    
+
+ADXL345 myACC = ADXL345(); 
 
 void setup()
 {
@@ -129,4 +131,4 @@ myACC.setSleepEnabled(false);
   }
 ```
 
-
+Un front haut est sur la sortie d'interruption 0 de l'accéléromètre est activé en cas de choc, et de même sur la pin 1 en cas de mouvement. Ces deux pins sont reliées aux entrées d'interruption externe de notre microcontrolleur, ce qui nous permet de changer l'état de la machine à état qui gère la lecture des fichiers au sein des fonctions d'interruption.
