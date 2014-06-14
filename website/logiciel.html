@@ -129,8 +129,9 @@ Ensuite c'est un choix de simplicité, nous pouvons utiliser un grand nombre de 
 <p>Par soucis de simplicité de routage et d'emcombrement (nous pouvons difficilement souder des CMS de tailles inférieure à 0805 à la main), nous avons choisis d'utiliser une carte "ARDUINO PRO MINI". Ces cartes se trouvent pour moins de 2€ sur des <a href="http://www.ebay.fr/sch/i.html?_sacat=0&amp;_sop=15&amp;_nkw=arduino+pro+mini&amp;LH_PrefLoc=2&amp;rt=nc&amp;LH_BIN=1">vendeurs chinois</a> ce qui d'ailleurs est moins cher que le microcontrolleur seul sur des <a href="http://fr.farnell.com/atmel/atmega328p-au/micro-8-bits-avr-32k-flash-32tqfp/dp/1715486">vendeurs occidentaux</a>.</p>
 <h1 id="gestion-de-la-carte-sd">Gestion de la carte SD</h1>
 <h2 id="protocole-spi">Protocole SPI</h2>
-<p>Le microcontrolleur communique avec la carte SD avec le protocole SPI (Serial Peripheral Interface). C'est un bus de donnée série synchrone (l'horloge est sur le fil sck) permettant de communiquer en full duplex (le maitre et l'esclave peuvent <em>parler</em> en même temps). C'est un protocole optimisé pour la rapidité ; on contrôle avec quel périphérique on <em>discute</em> en appliquant un état bas sur le chip select du périphérique correspondant.</p>
-<p>Il faut noter que la carte SD fonctionne en logique 3.3V, si notre microcontrolleur utilise une logique 5V il faut faire une adaptation de tension pour ne pas endommager la carte SD. Cela peut se faire avec un composant dédié ou de façon plus simple mais moins performante avec un pont diviseur de tension.</p>
+<p>Le microcontrolleur communique avec la carte SD avec le protocole SPI (Serial Peripheral Interface). C'est un protocole série synchrone (l'horloge étant nommée sck) permettant de communiquer en full duplex (le maitre et l'esclave peuvent <em>parler</em> en même temps). Le maitre communique sur le fil MOSI (Master Output Salve Input) et le périphérique esclave sur MISO. C'est un protocole optimisé pour la rapidité ; on contrôle avec quel périphérique on <em>discute</em> en appliquant un état bas sur le chip select (CS) du périphérique correspondant.
+Pour communiquer avec plusieurs périphériques en SPI il faut donc autant de CS que de périphériques, ce qui est assez limitant.</p>
+<p>Il faut noter que la carte SD fonctionne en logique 3.3V, si notre microcontrolleur utilise une logique 5V il faut faire une adaptation de tension sur tous les signaux pour ne pas endommager la carte SD. Cela peut se faire avec un composant dédié ou de façon plus simple mais moins performante avec un pont diviseur de tension.</p>
 <p>TODO : insérer image</p>
 <h2 id="format-de-partition-fat32">Format de partition FAT32</h2>
 <p>La librairie <a href="http://arconlab.com/lab/Arduino/Library/SD%20Reader%20-%20Fat32/html/class_sd_file.html">SdFat</a> permet de prendre facilement en main un support de stockage formaté en FAT16 ou FAT32 sur des microcontrolleurs atmega.</p>
@@ -142,7 +143,48 @@ Ensuite c'est un choix de simplicité, nous pouvons utiliser un grand nombre de 
 <p>Pour lire les fichiers Wave et les transmettre au <a href="http://ww1.microchip.com/downloads/en/DeviceDoc/21897a.pdf">DAC externe</a> nous utilisons la librairie <a href="https://code.google.com/p/wavehc/">WaveHC</a> réalisé initialement par Lady Ada pour la carte d'extension d'extension <a href="http://www.adafruit.com/products/175">Wave Shield</a>.</p>
 <p>TODO : mettre un bout de code</p>
 <h1 id="gestion-de-l-acceleromètre">Gestion de l'acceleromètre</h1>
+<h2 id="quel-acceleromètre-choisir-et-comment-interprêter-les-données">Quel acceleromètre choisir et comment interprêter les données</h2>
+<p>L'acceleromètre est le composant crucial du projet pour permettre d'interprêter le mouvement. Après beaucoup de temps passé à élaborrer des algorithmes plus ou moins performant pour détecter le mouvement en focntion des seules composants de l'acceleration, nous nous sommes tournés vers une composant qui fait tout le traitement pour nous : l'<a href="http://lightsaber.ensea.fr/data/documents/adxl345.pdf">ADXL345</a>.
+Il possède comme fonctionnalités inbteressantes :</p>
+<ul>
+<li>une détection de choc (<em>tap</em>)</li>
+<li>une détection de double choc (<em>double tap</em>)</li>
+<li>une détection de chute libre (<em>freefall</em>)</li>
+<li>une détection d'activité, inactivité, </li>
+<li>...</li>
+</ul>
+<p>La détection de choc et d'activité sont particulièrement interessantes pour nous car elles nous permettent de différencier un non mouvement d'un mouvement, et d'un choc (avec un autre sabre ou un objet).</p>
+<p>De plus cette détection se fait par interruption ce qui allège le microcontrolleur de calculs ou d'attente active dans la boucle principale !</p>
 <h2 id="communication-en-i2c">Communication en I2C</h2>
-<p>Le microcontrolleur communique avec l'acceléromètre en I2C. C'est un protocole </p>
-<h2 id="fonctionnalités-de-l-acceleromètres">Fonctionnalités de l'acceleromètres</h2>
-<h2 id="algotithme-utilisé">Algotithme utilisé</h2></body></html>
+<p>Le microcontrolleur communique avec l'acceléromètre en I2C. C'est un protocole synchrone, half duplex et bidirectionnel. Il y a seulement deux fils : SDA (Serial DAta line) qui sert à la communication et SCL (Serial Clock Line) qui transmet l'horloge imposé par le maitre. C'est un protocole maitre esclave, chaque communication ne peux être imposé que par le maitre, mais l'esclave peut devenir maitre (rébélion !). C'est un protocole initialement fait pour la domotique ; chaque périphérique étant identifié par un identifiant (dont il doit être unique sur ce bus, bien évidement), l'idée et qu'un microcontrolleur puisse interroger plusieurs centaines de capteurs différents, tous connectés sur un même bus de deux fils (limitant ainsi le nombre de fils et d'I/O).</p>
+<h2 id="algorithme-utilisé">Algorithme utilisé</h2>
+<p>L'algorithme utilisé est en somme très simple. On effectue une machine à état qui va passer d'un son à l'autre selon les données reçu par l'accéléromètre.
+Voici le code de la boucle principale simplifié : </p>
+<pre><code class="python">
+switch(state) {
+            case 1 : //ILDE
+              if (!wave.isplaying) //si aucun son n'est joué
+                  playfile(idle) ; //Joue le son idle
+              break;
+            case 2 : //SWING
+                delay(10); //attente de 10ms pour différencier le choc du mouvement 
+                if(state == 3)
+                {
+                  playHit() ; //Joue un son de type hit
+                  delay(200); //attente de 200ms d'anti-rebond
+                }
+                else
+                {
+                  playSwing() ; //Joue un son de type swing
+                }
+                state = 1;
+                break ;
+            case 3 : //HIT
+                playHit() ; 
+                delay(200); //attente de 200ms d'anti-rebond
+                state = 1;
+                break ;
+ }
+</code></pre>
+
+<h2 id="configuration-de-l-accéléromètre">Configuration de l'accéléromètre</h2></body></html>
