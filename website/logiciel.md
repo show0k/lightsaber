@@ -2,6 +2,7 @@ Un des grands défis de ce projet est de générer un son de façon fluide en fo
 
 Pour stocker les fichiers audio, nous avons fait le choix d'utiliser une carte microSD ; elle est formatée avec une partition FAT32, qui a l'avantage d'être simple et lisible sur tous les systèmes d'exploitation. Les fichiers audio sont enregistrés dans le format brut PCM dans un conteneur WAVE appelé communément "format wave". Un format compressé comme le MP3 nécessiterai une puce dédié qui permet de décompresser le fichier ce qui apporte une complexité inutile pour les besoins de notre projet.
 
+
 # Microcontrolleur
 Nous avons utilisé un microcontroleur [ATMEGA328p](http://www.atmel.com/devices/atmega328p.aspx), utilisable avec les librairies "Arduino".
 Ce choix est d'abord technologique, un microcontrolleur 8 bits est amplement suffisant pour l'ampleur du projet ; il n'est pas utile d'utiliser un processeur ARM11 80 broches fonctionnant à 60MHz comme ce que nous avions immaginé au départ.
