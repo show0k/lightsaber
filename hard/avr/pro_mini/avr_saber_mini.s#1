@@ -13306,12 +13306,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <wire x1="71.12" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$1" class="0">
-<segment>
-<pinref part="U$4" gate="G$1" pin="INH"/>
-<wire x1="-55.88" y1="121.92" x2="-58.42" y2="121.92" width="0.1524" layer="91"/>
-</segment>
-</net>
 </nets>
 </sheet>
 </sheets>

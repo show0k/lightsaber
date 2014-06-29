@@ -12515,7 +12515,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="GND25" library="supply2" deviceset="GND" device=""/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R0805"/>
-<part name="GND26" library="supply2" deviceset="GND" device=""/>
 <part name="HP" library="pinhead" deviceset="PINHD-1X2" device=""/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0805"/>
 <part name="C7" library="rcl" deviceset="C-EU" device="025-025X050"/>
@@ -12570,6 +12569,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <part name="P+14" library="supply1" deviceset="+5V" device=""/>
 <part name="GND24" library="supply1" deviceset="GND" device=""/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
+<part name="P+1" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12605,7 +12605,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="P+5" gate="1" x="193.04" y="142.24"/>
 <instance part="GND25" gate="GND" x="193.04" y="124.46"/>
 <instance part="R11" gate="G$1" x="175.26" y="139.7" rot="R90"/>
-<instance part="GND26" gate="GND" x="175.26" y="132.08"/>
 <instance part="HP" gate="G$1" x="284.48" y="142.24"/>
 <instance part="R12" gate="G$1" x="251.46" y="144.78"/>
 <instance part="C7" gate="G$1" x="193.04" y="132.08"/>
@@ -12660,6 +12659,7 @@ We've spent an enormous amount of time creating and checking these footprints an
 <instance part="P+14" gate="1" x="76.2" y="71.12" rot="MR90"/>
 <instance part="GND24" gate="1" x="73.66" y="68.58" rot="R90"/>
 <instance part="+3V4" gate="G$1" x="-25.4" y="-27.94" rot="R90"/>
+<instance part="P+1" gate="1" x="165.1" y="142.24"/>
 </instances>
 <busses>
 </busses>
@@ -12733,6 +12733,13 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="P+14" gate="1" pin="+5V"/>
 <wire x1="73.66" y1="71.12" x2="71.12" y2="71.12" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="P+1" gate="1" pin="+5V"/>
+<wire x1="165.1" y1="139.7" x2="165.1" y2="132.08" width="0.1524" layer="91"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="165.1" y1="132.08" x2="175.26" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="132.08" x2="175.26" y2="134.62" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -12747,10 +12754,6 @@ We've spent an enormous amount of time creating and checking these footprints an
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="241.3" y1="144.78" x2="246.38" y2="144.78" width="0.1524" layer="91"/>
 <junction x="241.3" y="144.78"/>
-</segment>
-<segment>
-<pinref part="R11" gate="G$1" pin="1"/>
-<pinref part="GND26" gate="GND" pin="GND"/>
 </segment>
 <segment>
 <pinref part="GND25" gate="GND" pin="GND"/>
